@@ -1,0 +1,54 @@
+Mileage Predictor Application
+========================================================
+author:
+date: 
+autosize: true
+
+The mtcars Dataset
+========================================================
+The **mtcars** data set is available with the base R installation and contains road test results for a number of different car models. The data was extracted from the 1974 Motor Trend US magazine and comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles (1973-74 models).
+
+We used this dataset to derive a number of linear regression models between the several variables collected in the road tests and the fuel consumption of the cars tested. The best model was then used to develop the Mileage Predictor Application.
+
+
+Model Fitting
+========================================================
+Considering criteria of parsimoniouness and goodness of fit it was determined that the best linear regression model explains fuel consumption using the weigth and the horsepower of the car. 
+
+```{r}
+mpgPredictor = lm(mpg ~ wt + hp, mtcars)
+summary(mpgPredictor)$coef
+```
+
+
+Residual Plot and Diagnostics
+========================================================
+In the following plot we can verify that there are no observable patterns in the residuals of the 
+model selected.
+
+```{r, echo=FALSE}
+library(ggplot2)
+g <- ggplot(data.frame(Fitted = predict(mpgPredictor), Residuals = resid(mpgPredictor)), 
+            aes(x = Fitted, y = Residuals))
+g <- g + geom_hline(yintercept = 0, size = 1); 
+g <- g + geom_point(size = 3, colour = "red", alpha = 0.6)
+g <- g + labs(x = "Fitted Values", y = "Residuals")
+g <- g + ggtitle("Residuals vs Fitted")
+g
+```
+
+Residual Plot and Diagnostics (Cont.)
+========================================================
+Using *dfbetas()* we can verify that no specific data point has a disproportionate effect in the calculation of the model coefficients (only the 3 first rows of the table are shown).
+
+```{r, echo=FALSE}
+head(dfbetas(mpgPredictor),3)
+```
+
+Finally, using *dffits()* we can verify that no specific data point has a disproportionate effect in the calculation of the overall fitted values.
+
+```{r, echo=FALSE}
+max(dffits(mpgPredictor))
+```
+
+
