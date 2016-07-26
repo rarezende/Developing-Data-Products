@@ -1,0 +1,9 @@
+name: MileagePredictor
+account: rarezende
+server: shinyapps.io
+appId: 116788
+bundleId: 516173
+url: https://rarezende.shinyapps.io/MileagePredictor/
+when: 1469558771.6485
+asMultiple: FALSE
+asStatic: FALSE
